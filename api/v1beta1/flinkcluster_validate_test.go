@@ -135,8 +135,8 @@ func TestInvalidImageSpec(t *testing.T) {
 }
 
 func TestInvalidJobManagerSpec(t *testing.T) {
+	var jmReplicas0 int32 = 0
 	var jmReplicas1 int32 = 1
-	var jmReplicas2 int32 = 2
 	var rpcPort int32 = 8001
 	var blobPort int32 = 8002
 	var queryPort int32 = 8003
@@ -153,7 +153,7 @@ func TestInvalidJobManagerSpec(t *testing.T) {
 				PullPolicy: corev1.PullPolicy("Always"),
 			},
 			JobManager: JobManagerSpec{
-				Replicas:    &jmReplicas2,
+				Replicas:    &jmReplicas0,
 				AccessScope: AccessScopeVPC,
 				Ports: JobManagerPorts{
 					RPC:   &rpcPort,
@@ -165,7 +165,7 @@ func TestInvalidJobManagerSpec(t *testing.T) {
 		},
 	}
 	var err = validator.ValidateCreate(&cluster)
-	var expectedErr = "invalid JobManager replicas, it must be 1"
+	var expectedErr = "invalid JobManager replicas, it must be greater then 1"
 	assert.Equal(t, err.Error(), expectedErr)
 
 	cluster = FlinkCluster{
