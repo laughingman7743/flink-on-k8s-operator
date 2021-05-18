@@ -318,8 +318,10 @@ func (v *Validator) validateJobManager(jmSpec *JobManagerSpec) error {
 	var err error
 
 	// Replicas.
-	if jmSpec.Replicas == nil || *jmSpec.Replicas != 1 {
-		return fmt.Errorf("invalid JobManager replicas, it must be 1")
+	// Support for multiple job managers
+	// https://ci.apache.org/projects/flink/flink-docs-release-1.13/docs/deployment/resource-providers/native_kubernetes/#high-availability-on-kubernetes
+	if jmSpec.Replicas == nil || *jmSpec.Replicas <= 0 {
+		return fmt.Errorf("invalid JobManager replicas, it must be greater then 1")
 	}
 
 	// AccessScope.
