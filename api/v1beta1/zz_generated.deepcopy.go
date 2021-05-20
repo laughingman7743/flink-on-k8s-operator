@@ -518,6 +518,11 @@ func (in *JobManagerSpec) DeepCopyInto(out *JobManagerSpec) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.Affinity != nil {
+		in, out := &in.Affinity, &out.Affinity
+		*out = new(v1.Affinity)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Sidecars != nil {
 		in, out := &in.Sidecars, &out.Sidecars
 		*out = make([]v1.Container, len(*in))
@@ -576,6 +581,11 @@ func (in *JobSpec) DeepCopyInto(out *JobSpec) {
 	}
 	if in.AllowNonRestoredState != nil {
 		in, out := &in.AllowNonRestoredState, &out.AllowNonRestoredState
+		*out = new(bool)
+		**out = **in
+	}
+	if in.TakeSavepointOnUpgrade != nil {
+		in, out := &in.TakeSavepointOnUpgrade, &out.TakeSavepointOnUpgrade
 		*out = new(bool)
 		**out = **in
 	}
@@ -829,6 +839,11 @@ func (in *TaskManagerSpec) DeepCopyInto(out *TaskManagerSpec) {
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.Affinity != nil {
+		in, out := &in.Affinity, &out.Affinity
+		*out = new(v1.Affinity)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Sidecars != nil {
 		in, out := &in.Sidecars, &out.Sidecars

@@ -207,6 +207,7 @@ func getDesiredJobManagerStatefulSet(
 		ImagePullSecrets:   imageSpec.PullSecrets,
 		SecurityContext:    securityContext,
 		ServiceAccountName: getServiceAccountName(serviceAccount),
+		Affinity:           jobManagerSpec.Affinity,
 	}
 
 	var jobManagerStatefulSet = &appsv1.StatefulSet{
@@ -506,6 +507,7 @@ func getDesiredTaskManagerStatefulSet(
 		ImagePullSecrets:   imageSpec.PullSecrets,
 		SecurityContext:    securityContext,
 		ServiceAccountName: getServiceAccountName(serviceAccount),
+		Affinity:           taskManagerSpec.Affinity,
 	}
 	var taskManagerStatefulSet = &appsv1.StatefulSet{
 		ObjectMeta: metav1.ObjectMeta{
