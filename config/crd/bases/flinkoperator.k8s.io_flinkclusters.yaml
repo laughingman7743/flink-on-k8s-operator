@@ -15,6 +15,7 @@ spec:
     plural: flinkclusters
     singular: flinkcluster
   scope: Namespaced
+  preserveUnknownFields: false
   versions:
   - name: v1beta1
     schema:
